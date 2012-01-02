@@ -12,6 +12,22 @@ require 'date'
 #}
 #con.close
 
+  put '/blog/:urlname/post/:post_id' do
+    content_type :json
+    begin
+      blog = Blog.first( conditions: { urlname: params[:urlname]})
+      post = Post.find( params[:id] )
+
+      ReturnStatus.json_response( 
+        status ,
+        {"blog" => blog ,"posts" => post ,"total_posts" => 1}
+       )
+    rescue => ex
+      status 500
+      raise ex
+    end
+  end
+
 #time = Time.new
 #time += (24 * 60 * 60)
 #p Time.now.strftime("%Y-%m-%d %H:%M:%S").to_s > time.strftime("%Y-%m-%d %H:%M:%S").to_s
